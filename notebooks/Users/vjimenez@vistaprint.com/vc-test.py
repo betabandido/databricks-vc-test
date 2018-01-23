@@ -3,6 +3,7 @@ import random
 from pyspark.sql import *
 
 print('hi')
+print('bye')
 
 def generate_person():
   sex = 'male' if random.randint(0, 1) < 0.5 else 'female'
