@@ -18,23 +18,24 @@ from pyspark.ml import Pipeline, PipelineModel
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.feature import OneHotEncoder, StringIndexer, VectorAssembler
 
-print('hi!!')
-
 sexIndexer = StringIndexer(inputCol='sex', outputCol='indexedSex')
-oneHotEncode = OneHotEncoder(inputCol='indexedSex', outputCol='sexVector')
+oneHotEncoder = OneHotEncoder(inputCol='indexedSex', outputCol='sexVector')
 assembler = VectorAssembler(
     inputCols=['score', 'sexVector'],
     outputCol='features'
 )
 lr = LinearRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8, labelCol='salary')
-pipeline = Pipeline(stages=[sexIndexer, oneHotEncode, assembler, lr])
+pipeline = Pipeline(stages=[sexIndexer, oneHotEncoder, assembler, lr])
 model = pipeline.fit(df)
-model.save('test_model')
+model.write().overwrite().save('test_model')
 
 # COMMAND ----------
 
+test_df = sqlContext.createDataFrame([generate_person() for i in range(0, 10)])
+display(test_df)
+
 loaded_model = PipelineModel.load('test_model')
-display(loaded_model.transform(df))
+display(loaded_model.transform(test_df))
 
 # COMMAND ----------
 
