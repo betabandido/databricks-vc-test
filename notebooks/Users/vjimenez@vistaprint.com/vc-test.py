@@ -18,6 +18,8 @@ from pyspark.ml import Pipeline, PipelineModel
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.feature import OneHotEncoder, StringIndexer, VectorAssembler
 
+print('hi!!')
+
 sexIndexer = StringIndexer(inputCol='sex', outputCol='indexedSex')
 oneHotEncode = OneHotEncoder(inputCol='indexedSex', outputCol='sexVector')
 assembler = VectorAssembler(
