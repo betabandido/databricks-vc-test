@@ -43,3 +43,4 @@ display(loaded_model.transform(test_df))
 # COMMAND ----------
 
 dbutils.fs.ls('/test_model/')
+print('hi')
